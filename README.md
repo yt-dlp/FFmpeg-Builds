@@ -1,6 +1,8 @@
 # FFmpeg Static Auto-Builds
 
-Static Windows (x86_64) and Linux (x86_64) Builds of ffmpeg master and latest release branch.
+Shared Windows (x86 and x86_64) and static Linux (x86_64) Builds of ffmpeg master and latest release branch
+with a [patch by @danny-wu](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html)
+that corrects VP9 timestamps. Fixes https://github.com/ytdl-org/youtube-dl/issues/28042.
 
 Windows builds are targetting Windows 7 and newer.
 

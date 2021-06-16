@@ -1,4 +1,4 @@
-ARG GH_REPO=btbn/ffmpeg-builds
+ARG GH_REPO=nihil-admirari/ffmpeg-with-vp9-timestamp-fix
 FROM ghcr.io/$GH_REPO/base:latest
 
 ENV PATH="/opt/ct-ng/bin:${PATH}"

@@ -1,4 +1,4 @@
-ARG GH_REPO=nihil-admirari/ffmpeg-with-vp9-timestamp-fix
+ARG GH_REPO=yt-dlp/ffmpeg-builds
 FROM ghcr.io/$GH_REPO/base:latest
 
 ENV DEBIAN_FRONTEND noninteractive

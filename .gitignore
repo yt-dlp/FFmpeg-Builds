@@ -1,3 +1,5 @@
 /Dockerfile
 /ffbuild/
 /artifacts/
+
+*.sublime-*

@@ -16,13 +16,8 @@ These patches have been applied to the builds
     * Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
 
 
-
-
-## Patches Welcome
-Known issues for which patches are welcome
-
-1. **FFmpeg fails to decode AAC with embedded tags downloaded from HLS manifests**
-    * [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433), [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039)
+1. [**Fix AAC HLS streams being truncated mid stream**](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com) by [shirt](https://github.com/shirt-dev) and [jeeb](https://github.com/jeeb)
+    * Fixes [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039), [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433)
 
 
 

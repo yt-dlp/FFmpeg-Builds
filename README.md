@@ -12,17 +12,14 @@ This repository provides static Windows (x86 and x86_64) and Linux (x86_64, arm6
 ## Patches Applied
 These patches have been applied to the builds
 
-1. [**Fix for YouTube's VP9 encodes with non-monotonous DTS**](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html) by [@danny-wu](https://github.com/danny-wu)
-    * Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
+### 1. [Fix for YouTube's VP9 encodes with non-monotonous DTS](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html)
+by [@danny-wu](https://github.com/danny-wu)  
+Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
 
 
-
-
-## Patches Welcome
-Known issues for which patches are welcome
-
-1. **FFmpeg fails to decode AAC with embedded tags downloaded from HLS manifests**
-    * [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433), [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039)
+### 2. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
+by [@shirt](https://github.com/shirt-dev) and [@jeeb](https://github.com/jeeb)  
+Fixes [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039), [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433)
 
 
 

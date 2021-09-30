@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OAMR_SRC="https://sourceforge.net/projects/opencore-amr/files/opencore-amr/opencore-amr-0.1.5.tar.gz/download"
+OAMR_SRC="https://sourceforge.net/projects/opencore-amr/files/opencore-amr/opencore-amr-0.1.5.tar.gz/download?use_mirror=versaweb"
 
 ffbuild_enabled() {
     return 0

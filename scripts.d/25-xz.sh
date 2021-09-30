@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XZ_SRC="https://sourceforge.net/projects/lzmautils/files/xz-5.2.5.tar.xz/download"
+XZ_SRC="https://sourceforge.net/projects/lzmautils/files/xz-5.2.5.tar.xz/download?use_mirror=versaweb"
 
 ffbuild_enabled() {
     return 0

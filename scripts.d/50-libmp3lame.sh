@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LAME_SRC="https://sourceforge.net/projects/lame/files/lame/3.100/lame-3.100.tar.gz/download"
+LAME_SRC="https://fossies.org/linux/misc/lame-3.100.tar.gz"
 
 ffbuild_enabled() {
     return 0

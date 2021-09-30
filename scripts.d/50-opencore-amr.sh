@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OAMR_SRC="https://download.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz"
+OAMR_SRC="https://sourceforge.net/projects/opencore-amr/files/opencore-amr/opencore-amr-0.1.5.tar.gz/download"
 
 ffbuild_enabled() {
     return 0

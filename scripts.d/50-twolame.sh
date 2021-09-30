@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TWOLAME_SRC="https://sourceforge.net/projects/twolame/files/twolame/0.4.0/twolame-0.4.0.tar.gz/download"
+TWOLAME_SRC="https://downloads.sourceforge.net/project/twolame/twolame/0.4.0/twolame-0.4.0.tar.gz"
 
 ffbuild_enabled() {
     return 0

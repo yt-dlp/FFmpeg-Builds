@@ -73,6 +73,11 @@ cat <<EOF >"$BUILD_SCRIPT"
         git apply "\$patch"
     done
 
+    # Backport avformat/aacdec: enable probesize-sized resyncs mid-stream
+    if [[ "$GIT_BRANCH" != 'master' ]]; then
+        git cherry-pick c20577806f0a161c6867e72f884d020a253de10a
+    fi
+
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS $FF_CONFIGURE \
         --extra-cflags='$FF_CFLAGS' --extra-cxxflags='$FF_CXXFLAGS' \
         --extra-ldflags='$FF_LDFLAGS' --extra-ldexeflags='$FF_LDEXEFLAGS' --extra-libs='$FF_LIBS' \

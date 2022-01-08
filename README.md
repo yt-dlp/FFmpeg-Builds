@@ -17,9 +17,20 @@ by [@danny-wu](https://github.com/danny-wu)
 Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
 
 
-### 2. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
+
+## Historical Patches
+Patches that were used in the past but are no longer needed
+
+### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 by [@shirt](https://github.com/shirt-dev) and [@jeeb](https://github.com/jeeb)  
 Fixes [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039), [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433)
+
+
+
+## Patches Welcome
+Known issues for which patches are welcome
+
+*Nothing at the moment*
 
 
 

@@ -1,4 +1,4 @@
-ARG GH_REPO=ghcr.io/btbn/ffmpeg-builds
+ARG GH_REPO=ghcr.io/nihil-admirari/ffmpeg-with-vp9-timestamp-fix
 FROM $GH_REPO/base:latest
 
 RUN --mount=src=ct-ng-config,dst=/.config \

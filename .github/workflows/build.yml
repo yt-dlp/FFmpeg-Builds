@@ -63,6 +63,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
+          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
@@ -133,7 +134,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,winarm64,linux32,linux64,linuxarm64]
+        target: [win32,win64,winarm64,linux64,linuxarm64]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -143,6 +144,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
+          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
@@ -189,21 +191,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,winarm64,linux64,linuxarm64]
-        variant: [gpl,lgpl,gpl 8.0,gpl 7.1,lgpl 8.0,lgpl 7.1,gpl-shared,lgpl-shared,gpl-shared 8.0,gpl-shared 7.1,lgpl-shared 8.0,lgpl-shared 7.1]
-        include:
-          - target: win64
-            variant: gpl 7.0
-          - target: win64
-            variant: gpl 6.1
-          - target: win64
-            variant: gpl 6.0
-          - target: win64
-            variant: gpl 5.1
-          - target: win64
-            variant: gpl 5.0
-          - target: win64
-            variant: gpl 4.4
+        target: [win32,win64,linux64,linuxarm64]
+        variant: [gpl,lgpl,gpl 4.4,gpl 5.1,lgpl 4.4,lgpl 5.1,gpl-shared,lgpl-shared,gpl-shared 4.4,gpl-shared 5.1,lgpl-shared 4.4,lgpl-shared 5.1]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -213,6 +202,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
+          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
@@ -268,8 +258,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,winarm64,linux64,linuxarm64]
-        variant: [gpl,lgpl,gpl 8.0,gpl 7.1,lgpl 8.0,lgpl 7.1,gpl-shared,lgpl-shared,gpl-shared 8.0,gpl-shared 7.1,lgpl-shared 8.0,lgpl-shared 7.1]
+        target: [win32,win64,linux64,linuxarm64]
+        variant: [gpl,lgpl,gpl 4.4,gpl 5.1,lgpl 4.4,lgpl 5.1,gpl-shared,lgpl-shared,gpl-shared 4.4,gpl-shared 5.1,lgpl-shared 4.4,lgpl-shared 5.1]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h

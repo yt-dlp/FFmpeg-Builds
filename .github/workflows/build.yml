@@ -9,6 +9,7 @@ on:
     types: [build]
   schedule:
     - cron: '0 12 * * *'
+  workflow_dispatch:
 
 env:
   DOCKER_BUILDKIT: 1
@@ -51,7 +52,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,linux64]
+        target: [win32,win64,linux64]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -86,7 +87,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,linux64]
+        target: [win32,win64,linux64]
         variant: [gpl,lgpl,gpl 4.4,gpl 5.0,lgpl 4.4,lgpl 5.0,gpl-shared,lgpl-shared,gpl-shared 4.4,gpl-shared 5.0,lgpl-shared 4.4,lgpl-shared 5.0]
     steps:
       - name: Checkout
@@ -126,7 +127,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,linux64]
+        target: [win32,win64,linux64]
         variant: [gpl,lgpl,gpl 4.4,gpl 5.0,lgpl 4.4,lgpl 5.0,gpl-shared,lgpl-shared,gpl-shared 4.4,gpl-shared 5.0,lgpl-shared 4.4,lgpl-shared 5.0]
     steps:
       - name: Checkout

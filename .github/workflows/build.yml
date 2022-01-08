@@ -18,7 +18,7 @@ on:
         default: false
         required: false
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '42 13 * * *'
 
 env:
   DOCKER_BUILDKIT: 1
@@ -32,7 +32,7 @@ jobs:
       - name: Repo Check
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          if [[ "$GITHUB_REPOSITORY" != "BtbN/FFmpeg-Builds" ]]; then
+          if [[ "$GITHUB_REPOSITORY" != "yt-dlp/FFmpeg-Builds" ]]; then
             echo "When forking this repository to make your own builds, you have to adjust this check."
             echo "When doing so make sure to randomize the scheduled cron time above, in order to spread out the various build times as much as possible."
             echo "This has been put in place due to the enormous amounts of traffic hundreds/thousands of parallel builds can cause on external infrastructure."
@@ -58,13 +58,14 @@ jobs:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
       - name: Install buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
+          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -79,7 +80,7 @@ jobs:
       - name: Stop Commands
         run: T="$(echo -n ${{ github.token }} | sha256sum | head -c 64)" && echo -e "::add-mask::${T}\n::stop-commands::${T}"
       - name: Build target base image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: images/base
           pull: true
@@ -95,7 +96,7 @@ jobs:
           echo "dltagname=$(./util/get_dl_cache_tag.sh)" >> $GITHUB_OUTPUT
       - name: Cache
         if: ${{ !cancelled() && !contains(matrix.runner, 'arm') }}
-        uses: actions/cache@v5
+        uses: actions/cache@v4
         with:
           path: .cache/downloads
           key: download-cache-${{ steps.dl_cache.outputs.dltagname }}
@@ -110,7 +111,7 @@ jobs:
           tar czf .cache/cache.tar.gz .cache/downloads/*
       - name: Upload cache artifact
         if: ${{ !cancelled() && !contains(matrix.runner, 'arm') }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: download-cache
           overwrite: true
@@ -133,18 +134,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,winarm64,linux32,linux64,linuxarm64,linuxppc64,linuxmips64,linuxriscv64]
+        target: [win32,win64,winarm64,linux64,linuxarm64]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
       - name: Install buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
+          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -160,7 +162,7 @@ jobs:
       - name: Stop Commands
         run: T="$(echo -n ${{ github.token }} | sha256sum | head -c 64)" && echo -e "::add-mask::${T}\n::stop-commands::${T}"
       - name: Build target base image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: images/base-${{ matrix.target }}
           pull: true
@@ -189,36 +191,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,winarm64,linux64,linuxarm64]
-        variant: [gpl,lgpl,gpl 8.1,gpl 7.1,lgpl 8.1,lgpl 7.1,gpl-shared,lgpl-shared,gpl-shared 8.1,gpl-shared 7.1,lgpl-shared 8.1,lgpl-shared 7.1]
-        include:
-          - target: win64
-            variant: gpl 8.0
-          - target: win64
-            variant: gpl 7.0
-          - target: win64
-            variant: gpl 6.1
-          - target: win64
-            variant: gpl 6.0
-          - target: win64
-            variant: gpl 5.1
-          - target: win64
-            variant: gpl 5.0
-          - target: win64
-            variant: gpl 4.4
-          - target: win64
-            variant: gpl 4.3
+        target: [win32,win64,linux64,linuxarm64]
+        variant: [gpl,lgpl,gpl 4.4,gpl 5.1,lgpl 4.4,lgpl 5.1,gpl-shared,lgpl-shared,gpl-shared 4.4,gpl-shared 5.1,lgpl-shared 4.4,lgpl-shared 5.1]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
       - name: Install buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config: .github/buildkit.toml
+          driver-opts: image=ghcr.io/btbn/buildkit:master
       - name: Login to Docker
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -239,13 +225,13 @@ jobs:
       - name: Generate Dockerfile
         run: ./generate.sh ${{ matrix.target }} ${{ matrix.variant }}
       - name: Cache
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v4
         with:
           path: .cache/downloads
           key: download-cache-${{ steps.dl_cache.outputs.dltagname }}
           fail-on-cache-miss: true
       - name: Build target base image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: .
           pull: true
@@ -272,15 +258,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64,winarm64,linux64,linuxarm64]
-        variant: [gpl,lgpl,gpl 8.1,gpl 7.1,lgpl 8.1,lgpl 7.1,gpl-shared,lgpl-shared,gpl-shared 8.1,gpl-shared 7.1,lgpl-shared 8.1,lgpl-shared 7.1]
+        target: [win32,win64,linux64,linuxarm64]
+        variant: [gpl,lgpl,gpl 4.4,gpl 5.1,lgpl 4.4,lgpl 5.1,gpl-shared,lgpl-shared,gpl-shared 4.4,gpl-shared 5.1,lgpl-shared 4.4,lgpl-shared 5.1]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
       - name: Login to Docker
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -295,7 +281,7 @@ jobs:
           SLUG="${{ matrix.target }}-${{ matrix.variant }}"
           echo "artifact_slug=${SLUG// /-}" >> $GITHUB_OUTPUT
       - name: Upload artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-${{ steps.strs.outputs.artifact_slug }}
           overwrite: true
@@ -309,9 +295,9 @@ jobs:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
       - name: Download artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v4
         with:
           pattern: ffmpeg-*
           merge-multiple: true

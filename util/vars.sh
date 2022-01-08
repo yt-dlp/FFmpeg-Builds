@@ -30,7 +30,7 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-REPO="${GITHUB_REPOSITORY:-btbn/ffmpeg-builds}"
+REPO="${GITHUB_REPOSITORY:-nihil-admirari/ffmpeg-with-vp9-timestamp-fix}"
 REPO="${REPO,,}"
 REGISTRY="${REGISTRY_OVERRIDE:-ghcr.io}"
 BASE_IMAGE="${REGISTRY}/${REPO}/base:latest"

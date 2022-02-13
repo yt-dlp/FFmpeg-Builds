@@ -66,6 +66,11 @@ cat <<EOF >"$BUILD_SCRIPT"
     git clone --filter=blob:none --branch='$GIT_BRANCH' '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
+    # Backport fftools/ffmpeg: Restore DTS correction for VP9 copies
+    if [[ "$GIT_BRANCH" != 'master' ]]; then
+        git cherry-pick 68595b46cb374658432fff998e82e5ff434557ac
+    fi
+
     git config user.email "builder@localhost"
     git config user.name "Builder"
     for patch in /patches/*.patch; do

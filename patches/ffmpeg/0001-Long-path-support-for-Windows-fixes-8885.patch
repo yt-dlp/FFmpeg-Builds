@@ -1,0 +1,307 @@
+From 4c99b99ab4e8923f503294ff098e78bba12e8ef0 Mon Sep 17 00:00:00 2001
+From: nihil-admirari <50202386+nihil-admirari@users.noreply.github.com>
+Date: Sun, 13 Feb 2022 13:43:56 +0300
+Subject: [PATCH] Long path support for Windows (fixes #8885)
+To: ffmpeg-devel@ffmpeg.org
+
+Long path support is enabled by adding a manifest to all of fftools.
+MAX_PATH-sized buffers are replaced with dynamically sized ones.
+
+Signed-off-by: nihil-admirari <50202386+nihil-admirari@users.noreply.github.com>
+---
+ compat/w32dlfcn.h                | 58 +++++++++++++++++++++++++++-----
+ fftools/Makefile                 |  5 +++
+ fftools/cmdutils.c               | 31 +++++++++++++----
+ fftools/long_paths_utf8.manifest | 12 +++++++
+ fftools/long_paths_utf8.rc       |  3 ++
+ libavformat/avisynth.c           | 10 +++---
+ libavutil/wchar_filename.h       | 37 ++++++++++++++++++++
+ 7 files changed, 136 insertions(+), 20 deletions(-)
+ create mode 100644 fftools/long_paths_utf8.manifest
+ create mode 100644 fftools/long_paths_utf8.rc
+
+diff --git a/compat/w32dlfcn.h b/compat/w32dlfcn.h
+index 52a94ef..a36e97c 100644
+--- a/compat/w32dlfcn.h
++++ b/compat/w32dlfcn.h
+@@ -25,6 +25,30 @@
+ #if (_WIN32_WINNT < 0x0602) || HAVE_WINRT
+ #include "libavutil/wchar_filename.h"
+ #endif
++
++static inline wchar_t *get_module_filename(const HMODULE module)
++{
++    wchar_t *path = NULL;
++    int path_size = 0, path_len = 0;
++
++    do {
++        path_size = path_size ? 1.5 * path_size : MAX_PATH;
++        wchar_t *new_path = av_realloc_array(path, path_size, sizeof *path);
++        if (!new_path) {
++            av_free(path);
++            return NULL;
++        }
++        path = new_path;
++        path_len = GetModuleFileNameW(module, path, path_size);
++    } while (path_len && path_size <= 32768 && path_size <= path_len);
++
++    if (!path_len) {
++        av_free(path);
++        return NULL;
++    }
++    return path;
++}
++
+ /**
+  * Safe function used to open dynamic libs. This attempts to improve program security
+  * by removing the current directory from the dll search path. Only dll's found in the
+@@ -38,24 +62,40 @@ static inline HMODULE win32_dlopen(const char *name)
+     // Need to check if KB2533623 is available
+     if (!GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "SetDefaultDllDirectories")) {
+         HMODULE module = NULL;
+-        wchar_t *path = NULL, *name_w = NULL;
+-        DWORD pathlen;
++        wchar_t *path = NULL, *new_path = NULL, *name_w = NULL;
++        DWORD pathlen, pathsize, namelen;
+         if (utf8towchar(name, &name_w))
+             goto exit;
+-        path = (wchar_t *)av_calloc(MAX_PATH, sizeof(wchar_t));
++        namelen = wcslen(name_w);
+         // Try local directory first
+-        pathlen = GetModuleFileNameW(NULL, path, MAX_PATH);
+-        pathlen = wcsrchr(path, '\\') - path;
+-        if (pathlen == 0 || pathlen + wcslen(name_w) + 2 > MAX_PATH)
++        path = get_module_filename(NULL);
++        pathlen = path ? wcsrchr(path, '\\') - path : 0;
++        if (pathlen == 0)
++            goto exit;
++        pathsize = pathlen + namelen + 2;
++        new_path = av_realloc_array(path, pathsize, sizeof *path);
++        if (!new_path)
+             goto exit;
+-        path[pathlen] = '\\';
++        path = new_path;
+         wcscpy(path + pathlen + 1, name_w);
+         module = LoadLibraryExW(path, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+         if (module == NULL) {
+             // Next try System32 directory
+-            pathlen = GetSystemDirectoryW(path, MAX_PATH);
+-            if (pathlen == 0 || pathlen + wcslen(name_w) + 2 > MAX_PATH)
++            pathlen = GetSystemDirectoryW(path, pathsize);
++            if (pathlen == 0)
+                 goto exit;
++            if (pathlen + namelen + 2 > pathsize) {
++                pathsize = pathlen + namelen + 2;
++                new_path = av_realloc_array(path, pathsize, sizeof *path);
++                if (!new_path)
++                    goto exit;
++                path = new_path;
++                // The buffer might have been not enough for system directory
++                // in the first place.
++                pathlen = GetSystemDirectoryW(path, pathsize);
++                if (pathlen == 0)
++                    goto exit;
++            }
+             path[pathlen] = '\\';
+             wcscpy(path + pathlen + 1, name_w);
+             module = LoadLibraryExW(path, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+diff --git a/fftools/Makefile b/fftools/Makefile
+index da42078..53438b6 100644
+--- a/fftools/Makefile
++++ b/fftools/Makefile
+@@ -11,6 +11,11 @@ ALLAVPROGS_G = $(AVBASENAMES:%=%$(PROGSSUF)_g$(EXESUF))
+ 
+ OBJS-ffmpeg                        += fftools/ffmpeg_opt.o fftools/ffmpeg_filter.o fftools/ffmpeg_hw.o
+ 
++# Windows resource files
++OBJS-ffmpeg-$(HAVE_GNU_WINDRES) += fftools/long_paths_utf8.o
++OBJS-ffplay-$(HAVE_GNU_WINDRES) += fftools/long_paths_utf8.o
++OBJS-ffprobe-$(HAVE_GNU_WINDRES) += fftools/long_paths_utf8.o
++
+ define DOFFTOOL
+ OBJS-$(1) += fftools/cmdutils.o fftools/$(1).o $(OBJS-$(1)-yes)
+ $(1)$(PROGSSUF)_g$(EXESUF): $$(OBJS-$(1))
+diff --git a/fftools/cmdutils.c b/fftools/cmdutils.c
+index 4b50e15..ea78897 100644
+--- a/fftools/cmdutils.c
++++ b/fftools/cmdutils.c
+@@ -62,6 +62,7 @@
+ #endif
+ #ifdef _WIN32
+ #include <windows.h>
++#include "compat/w32dlfcn.h"
+ #endif
+ 
+ static int init_report(const char *env);
+@@ -2065,6 +2066,9 @@ FILE *get_preset_file(char *filename, size_t filename_size,
+ {
+     FILE *f = NULL;
+     int i;
++#if HAVE_GETMODULEHANDLE && defined(_WIN32)
++    char *datadir = NULL;
++#endif
+     const char *base[3] = { getenv("FFMPEG_DATADIR"),
+                             getenv("HOME"),
+                             FFMPEG_DATADIR, };
+@@ -2074,19 +2078,31 @@ FILE *get_preset_file(char *filename, size_t filename_size,
+         f = fopen(filename, "r");
+     } else {
+ #if HAVE_GETMODULEHANDLE && defined(_WIN32)
+-        char datadir[MAX_PATH], *ls;
++        wchar_t *datadir_w = get_module_filename(NULL);
+         base[2] = NULL;
+ 
+-        if (GetModuleFileNameA(GetModuleHandleA(NULL), datadir, sizeof(datadir) - 1))
++        if (wchartoansi(datadir_w, &datadir))
++            datadir = NULL;
++        av_free(datadir_w);
++
++        if (datadir)
+         {
+-            for (ls = datadir; ls < datadir + strlen(datadir); ls++)
++            char *ls;
++            for (ls = datadir; *ls; ls++)
+                 if (*ls == '\\') *ls = '/';
+ 
+             if (ls = strrchr(datadir, '/'))
+             {
+-                *ls = 0;
+-                strncat(datadir, "/ffpresets",  sizeof(datadir) - 1 - strlen(datadir));
+-                base[2] = datadir;
++                const int datadir_len = ls - datadir;
++                const int desired_size = datadir_len + strlen("/ffpresets") + 1;
++                char *new_datadir = av_realloc_array(
++                    datadir, desired_size, sizeof *datadir);
++                if (new_datadir) {
++                    datadir = new_datadir;
++                    datadir[datadir_len] = 0;
++                    strncat(datadir, "/ffpresets",  desired_size - 1 - datadir_len);
++                    base[2] = datadir;
++                }
+             }
+         }
+ #endif
+@@ -2106,6 +2122,9 @@ FILE *get_preset_file(char *filename, size_t filename_size,
+         }
+     }
+ 
++#if HAVE_GETMODULEHANDLE && defined(_WIN32)
++    av_free(datadir);
++#endif
+     return f;
+ }
+ 
+diff --git a/fftools/long_paths_utf8.manifest b/fftools/long_paths_utf8.manifest
+new file mode 100644
+index 0000000..d1ac1e4
+--- /dev/null
++++ b/fftools/long_paths_utf8.manifest
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
++
++<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
++  <assemblyIdentity type="win32" name="FFmpeg" version="1.0.0.0"/>
++  <application xmlns="urn:schemas-microsoft-com:asm.v3">
++    <windowsSettings xmlns:ws2016="http://schemas.microsoft.com/SMI/2016/WindowsSettings"
++                     xmlns:ws2019="http://schemas.microsoft.com/SMI/2019/WindowsSettings">
++      <ws2016:longPathAware>true</ws2016:longPathAware>
++      <ws2019:activeCodePage>UTF-8</ws2019:activeCodePage>
++    </windowsSettings>
++  </application>
++</assembly>
+diff --git a/fftools/long_paths_utf8.rc b/fftools/long_paths_utf8.rc
+new file mode 100644
+index 0000000..f33de76
+--- /dev/null
++++ b/fftools/long_paths_utf8.rc
+@@ -0,0 +1,3 @@
++#include <windows.h>
++
++CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "long_paths_utf8.manifest"
+diff --git a/libavformat/avisynth.c b/libavformat/avisynth.c
+index 350ac6d..3738cb1 100644
+--- a/libavformat/avisynth.c
++++ b/libavformat/avisynth.c
+@@ -34,6 +34,7 @@
+ /* Platform-specific directives. */
+ #ifdef _WIN32
+   #include "compat/w32dlfcn.h"
++  #include "libavutil/wchar_filename.h"
+   #undef EXTERN_C
+   #define AVISYNTH_LIB "avisynth"
+ #else
+@@ -572,8 +573,7 @@ static int avisynth_open_file(AVFormatContext *s)
+     AVS_Value arg, val;
+     int ret;
+ #ifdef _WIN32
+-    char filename_ansi[MAX_PATH * 4];
+-    wchar_t filename_wc[MAX_PATH * 4];
++    char *filename_ansi = NULL;
+ #endif
+ 
+     if (ret = avisynth_context_create(s))
+@@ -581,10 +581,10 @@ static int avisynth_open_file(AVFormatContext *s)
+ 
+ #ifdef _WIN32
+     /* Convert UTF-8 to ANSI code page */
+-    MultiByteToWideChar(CP_UTF8, 0, s->url, -1, filename_wc, MAX_PATH * 4);
+-    WideCharToMultiByte(CP_THREAD_ACP, 0, filename_wc, -1, filename_ansi,
+-                        MAX_PATH * 4, NULL, NULL);
++    if (utf8toansi(s->url, &filename_ansi))
++        goto fail;
+     arg = avs_new_value_string(filename_ansi);
++    av_free(filename_ansi);
+ #else
+     arg = avs_new_value_string(s->url);
+ #endif
+diff --git a/libavutil/wchar_filename.h b/libavutil/wchar_filename.h
+index 90f0824..32260a4 100644
+--- a/libavutil/wchar_filename.h
++++ b/libavutil/wchar_filename.h
+@@ -40,6 +40,43 @@ static inline int utf8towchar(const char *filename_utf8, wchar_t **filename_w)
+     MultiByteToWideChar(CP_UTF8, 0, filename_utf8, -1, *filename_w, num_chars);
+     return 0;
+ }
++
++av_warn_unused_result
++static inline int wchartoansi(const wchar_t *filename_w, char **filename)
++{
++    const int num_chars = WideCharToMultiByte(CP_THREAD_ACP, 0, filename_w, -1,
++                                              NULL, 0, NULL, NULL);
++    if (num_chars <= 0) {
++        *filename = NULL;
++        return 0;
++    }
++    *filename = (char *)av_calloc(num_chars, sizeof(char));
++    if (!*filename) {
++        errno = ENOMEM;
++        return -1;
++    }
++    WideCharToMultiByte(CP_THREAD_ACP, 0, filename_w, -1,
++                        *filename, num_chars, NULL, NULL);
++    return 0;
++}
++
++av_warn_unused_result
++static inline int utf8toansi(const char *filename_utf8, char **filename)
++{
++    wchar_t *filename_w = NULL;
++    int ret = -1;
++    if (utf8towchar(filename_utf8, &filename_w))
++        return -1;
++
++    if (!filename_w) {
++        *filename = NULL;
++        return 0;
++    }
++
++    ret = wchartoansi(filename_w, filename);
++    av_free(filename_w);
++    return ret;
++}
+ #endif
+ 
+ #endif /* AVUTIL_WCHAR_FILENAME_H */
+-- 
+2.32.0
+

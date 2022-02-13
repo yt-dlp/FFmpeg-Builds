@@ -1,68 +1,37 @@
 # FFmpeg Static Auto-Builds
 
-Static Windows (x86_64) and Linux (x86_64) Builds of ffmpeg master and latest release branch.
+[![Release version](https://img.shields.io/github/v/release/yt-dlp/FFmpeg-Builds?color=blue&label=&style=for-the-badge)](https://github.com/yt-dlp/FFmpeg-Builds/releases/latest)
 
-Windows builds are targetting Windows 7 and newer, provided UCRT is installed.
-The minimum supported version is Windows 10 22H2, no guarantees on anything older.
+This repository provides static Windows (x86 and x86_64) and Linux (x86_64, arm64) Builds of [ffmpeg master](https://github.com/FFmpeg/FFmpeg) and [latest release branch](https://github.com/FFmpeg/FFmpeg/tree/release/4.4) **with some patches necesssary for smooth integration with [yt-dlp](https://github.com/yt-dlp/yt-dlp)**
 
-Linux builds are targetting RHEL/CentOS 8 (glibc-2.28 + linux-4.18) and anything more recent.
+**Note**: The builds provided are only meant to be used with yt-dlp and any unrelated issues/patches will be rejected
 
-## Auto-Builds
 
-Builds run daily at 12:00 UTC (or GitHubs idea of that time) and are automatically released on success.
 
-**Auto-Builds run ONLY for win64 and linux(arm)64. There are no win32/x86 auto-builds, though you can produce win32 builds yourself following the instructions below.**
 
-### Release Retention Policy
+## Patches Applied
+These patches have been applied to the builds
 
-- The last build of each month is kept for two years.
-- The last 14 daily builds are kept.
-- The special "latest" build floats and provides consistent URLs always pointing to the latest build.
+1. [**Fix for YouTube's VP9 encodes with non-monotonous DTS**](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html) by [@danny-wu](https://github.com/danny-wu)
+    * Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
 
-## Package List
 
-For a list of included dependencies check the scripts.d directory.
-Every file corresponds to its respective package.
 
-## How to make a build
 
-### Prerequisites
+## Patches Welcome
+Known issues for which patches are welcome
 
-* bash
-* docker
+1. **FFmpeg fails to decode AAC with embedded tags downloaded from HLS manifests**
+    * [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433), [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039)
 
-### Build Image
 
-* `./makeimage.sh target variant [addin [addin] [addin] ...]`
 
-### Build FFmpeg
 
-* `./build.sh target variant [addin [addin] [addin] ...]`
+## Credits
 
-On success, the resulting zip file will be in the `artifacts` subdir.
+* [@BtbN](https://github.com/BtbN) for the [original workflow](https://github.com/BtbN/FFmpeg-Builds)
+* [@nihil-admirari](https://github.com/nihil-admirari) for [applying patches to the workflow](https://github.com/nihil-admirari/FFmpeg-With-VP9-Timestamp-Fix/commit/1ccd5d63f03be0ab622eb657ff3acae8b76da4e9)
 
-### Targets, Variants and Addins
+---
 
-Available targets:
-* `win64` (x86_64 Windows)
-* `win32` (x86 Windows)
-* `linux64` (x86_64 Linux, glibc>=2.28, linux>=4.18)
-* `linuxarm64` (arm64 (aarch64) Linux, glibc>=2.28, linux>=4.18)
-
-The linuxarm64 target will not build some dependencies due to lack of arm64 (aarch64) architecture support or cross-compiling restrictions.
-
-* `davs2` and `xavs2`: aarch64 support is broken.
-* `libmfx` and `libva`: Library for Intel QSV, so there is no aarch64 support.
-
-Available variants:
-* `gpl` Includes all dependencies, even those that require full GPL instead of just LGPL.
-* `lgpl` Lacking libraries that are GPL-only. Most prominently libx264 and libx265.
-* `nonfree` Includes fdk-aac in addition to all the dependencies of the gpl variant.
-* `gpl-shared` Same as gpl, but comes with the libav* family of shared libs instead of pure static executables.
-* `lgpl-shared` Same again, but with the lgpl set of dependencies.
-* `nonfree-shared` Same again, but with the nonfree set of dependencies.
-
-All of those can be optionally combined with any combination of addins:
-* `4.4`/`5.0`/`5.1`/`6.0`/`6.1`/`7.0` to build from the respective release branch instead of master.
-* `debug` to not strip debug symbols from the binaries. This increases the output size by about 250MB.
-* `lto` build all dependencies and ffmpeg with -flto=auto (HIGHLY EXPERIMENTAL, broken for Windows, sometimes works for Linux)
+PS: The commits are unsigned because of the periodic [automatic rebase](https://github.com/yt-dlp/FFmpeg-Builds/actions/workflows/rebase-on-upstream.yml)

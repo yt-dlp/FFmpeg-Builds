@@ -39,6 +39,9 @@ These patches have been applied to the builds
 by [@danny-wu](https://github.com/danny-wu)  
 Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
 
+#### 2. [Long path support for Windows](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-February/292947.html)
+by [@nihil-admirari](https://github.com/nihil-admirari)
+Fixes [yt-dlp#1995](https://github.com/yt-dlp/yt-dlp/issues/1995), [yt-dlp#1273](https://github.com/yt-dlp/yt-dlp/issues/1273), [FFmpeg#8885](https://trac.ffmpeg.org/ticket/8885)
 
 
 ## Historical Patches

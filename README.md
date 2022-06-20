@@ -33,6 +33,14 @@ There are currently no MacOS/Windows ARM builds. If you know how to add them to 
 
 
 
+## Patches Applied
+These patches have been applied to the builds
+
+#### 1. [WebVTT decoding fix](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-May/296353.html)
+by [@tpikonen](https://github.com/tpikonen)
+Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
+
+
 ## Historical Patches
 Patches that were used in the past but are no longer needed
 

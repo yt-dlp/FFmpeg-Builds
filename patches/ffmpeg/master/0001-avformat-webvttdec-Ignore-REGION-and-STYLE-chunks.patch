@@ -1,0 +1,26 @@
+From 74e90799eac1b2941f6719a2d682c3a86991b52b Mon Sep 17 00:00:00 2001
+From: Teemu Ikonen <tpikonen@mailbox.org>
+Date: Wed, 11 May 2022 19:05:40 +0300
+Subject: [PATCH] avformat/webvttdec: Ignore REGION and STYLE chunks
+
+Fixes trac ticket #8684.
+---
+ libavformat/webvttdec.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/libavformat/webvttdec.c b/libavformat/webvttdec.c
+index 52320ba7d1..49895b0a95 100644
+--- a/libavformat/webvttdec.c
++++ b/libavformat/webvttdec.c
+@@ -92,6 +92,8 @@ static int webvtt_read_header(AVFormatContext *s)
+         /* ignore header chunk */
+         if (!strncmp(p, "\xEF\xBB\xBFWEBVTT", 9) ||
+             !strncmp(p, "WEBVTT", 6) ||
++            !strncmp(p, "REGION", 6) ||
++            !strncmp(p, "STYLE", 5) ||
+             !strncmp(p, "NOTE", 4))
+             continue;
+ 
+-- 
+2.35.1
+

@@ -84,7 +84,7 @@ that actually landed in FFmpeg's `master`
 
 
 ## Historical Patches
-Patches that were used in the past but are no longer needed:
+Patches that were used in the past but are now part of FFmpeg:
 
 #### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 

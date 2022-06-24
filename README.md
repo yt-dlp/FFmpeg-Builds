@@ -41,7 +41,7 @@ Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684]
 
 
 ## Release-only patches
-Patches that have been merged in FFmpeg master, but aren't part of the latest ffmpeg release (5.0.1) and likely won't be added to ffmpeg for a while. They are included in our master builds, and `Long path support for Windows` is also included in our version 5 builds:
+Patches that have been merged in FFmpeg master, but aren't included in the latest ffmpeg release (5.0.1), and likely won't be added to ffmpeg's release branch for a while. They are included in our master builds, and `Long path support for Windows` is also included in our version 5 builds:
 
 ### 1. [Fix for YouTube's VP9 encodes with non-monotonous DTS](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html)
 
@@ -84,7 +84,7 @@ that actually landed in FFmpeg's `master`
 
 
 ## Historical Patches
-Patches that were used in the past but are now part of FFmpeg:
+Patches that were used in the past but are now included in FFmpeg's release branch:
 
 #### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 

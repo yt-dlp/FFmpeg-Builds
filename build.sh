@@ -39,12 +39,6 @@ cat <<EOF >"$BUILD_SCRIPT"
     git config user.email "builder@localhost"
     git config user.name "Builder"
 
-    # Backport fftools/ffmpeg: Restore DTS correction for VP9 copies
-    # Remove once this patch is in release
-    if [[ "$GIT_BRANCH" != 'master' ]]; then
-        git cherry-pick 68595b46cb374658432fff998e82e5ff434557ac
-    fi
-
     for patch in '/patches/$GIT_BRANCH'/*.patch; do
         echo "Applying \$patch"
         git apply "\$patch"

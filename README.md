@@ -27,7 +27,7 @@ Known issues for which patches are welcome:
 
 ### 1. More Builds
 
-There are currently no MacOS/Windows ARM builds. If you know how to add them to the workflow, make a PR
+There are currently no Windows ARM/MacOS builds. If you know how to add them to the workflow, make a PR
 
 
 
@@ -41,16 +41,29 @@ Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684]
 
 
 
+<!--
 ## Release-only patches
 Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
 
-### 1. [Fix for YouTube's VP9 encodes with non-monotonous DTS](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html)
+### 1. XXX
+-->
+
+
+
+## Historical Patches
+Patches that were used in the past but are no longer needed as of **5.1**:
+
+### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
+
+by [@shirt](https://github.com/shirt-dev) and [@jeeb](https://github.com/jeeb), merged in [c205778](https://github.com/FFmpeg/FFmpeg/commit/c20577806f0a161c6867e72f884d020a253de10a).
+Fixes [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039), [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433)
+
+### 2. [Fix for YouTube's VP9 encodes with non-monotonous DTS](https://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/280189.html)
 
 by [@danny-wu](https://github.com/danny-wu), merged in [68595b4](https://github.com/FFmpeg/FFmpeg/commit/68595b46cb374658432fff998e82e5ff434557ac)
 Fixes [yt-dlp#871](https://github.com/yt-dlp/yt-dlp/issues/871), [youtube-dl#28042](https://github.com/ytdl-org/youtube-dl/issues/28042), [FFmpeg#9086](https://trac.ffmpeg.org/ticket/9086)
 
-
-### 2. Long path support for Windows
+### 3. Long path support for Windows
 
 by [@nihil-admirari](https://github.com/nihil-admirari).
 Fixes [yt-dlp#1995](https://github.com/yt-dlp/yt-dlp/issues/1995),
@@ -76,22 +89,6 @@ and merged in a series of commits:
 [13350e8](https://github.com/FFmpeg/FFmpeg/commit/13350e81fd43cbd1aa3bbb7ed567e7dc7dd2b7f5)
 [c381f54](https://github.com/FFmpeg/FFmpeg/commit/c381f5412fe810bd8118123aed9bd4f76b75b59d)
 [69364a0](https://github.com/FFmpeg/FFmpeg/commit/69364a06c65d3437e8158cdffd98c2f6d1b84dd2)
-
-The version merged into FFmpeg's `master` however does not apply cleanly on the `release/5.0` branch.
-So our release builds continue to use [an old version ofthe patch](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-April/295569.html)
-with small modifications from [the version of the patch](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-June/297841.html)
-that actually landed in FFmpeg's `master`
-
-
-
-## Historical Patches
-Patches that were used in the past but are no longer needed:
-
-#### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
-
-by [@shirt](https://github.com/shirt-dev) and [@jeeb](https://github.com/jeeb), merged in [c205778](https://github.com/FFmpeg/FFmpeg/commit/c20577806f0a161c6867e72f884d020a253de10a).
-Fixes [yt-dlp#618](https://github.com/yt-dlp/yt-dlp/issues/618), [yt-dlp#998](https://github.com/yt-dlp/yt-dlp/issues/998), [yt-dlp#1039](https://github.com/yt-dlp/yt-dlp/issues/1039), [FFmpeg#9433](https://trac.ffmpeg.org/ticket/9433)
-
 
 
 

@@ -17,8 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64]
-        variant: [gpl-shared,gpl-shared 5.1]
+        target: [win64]
+        variant: [nonfree-shared,nonfree-shared 5.1]
         include:
           - target: linux64
             variant: gpl

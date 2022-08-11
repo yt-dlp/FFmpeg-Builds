@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,linux64,linuxarm64]
+        target: [win64,linux64,linuxarm64]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -95,17 +95,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64]
-        variant: [gpl,gpl 5.1,gpl-shared,gpl-shared 5.1]
-        include:
-          - target: linux64
-            variant: gpl
-          - target: linux64
-            variant: gpl 5.1
-          - target: linuxarm64
-            variant: gpl
-          - target: linuxarm64
-            variant: gpl 5.1
+        target: [win64]
+        variant: [nonfree-shared,nonfree-shared 5.1]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -148,17 +139,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64]
-        variant: [gpl,gpl 5.1,gpl-shared,gpl-shared 5.1]
-        include:
-          - target: linux64
-            variant: gpl
-          - target: linux64
-            variant: gpl 5.1
-          - target: linuxarm64
-            variant: gpl
-          - target: linuxarm64
-            variant: gpl 5.1
+        target: [win64]
+        variant: [nonfree-shared,nonfree-shared 5.1]
     steps:
       - name: Checkout
         uses: actions/checkout@v3

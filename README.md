@@ -29,6 +29,10 @@ Known issues for which patches are welcome:
 
 There are currently no Windows ARM/MacOS builds. If you know how to add them to the workflow, make a PR
 
+### 2. Support for HEVC over FLV
+
+See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1360633141) for details
+
 
 
 ## Patches Applied

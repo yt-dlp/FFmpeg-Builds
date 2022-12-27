@@ -29,10 +29,6 @@ Known issues for which patches are welcome:
 
 There are currently no Windows ARM/MacOS builds. If you know how to add them to the workflow, make a PR
 
-### 2. Support for HEVC over FLV
-
-See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1360633141) for details
-
 
 
 ## Patches Applied
@@ -42,6 +38,13 @@ These patches have been applied to the builds:
 
 by [@tpikonen](https://github.com/tpikonen).
 Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
+
+### 2. Support for HEVC over FLV
+
+Assembled from patches by [@xiaoxial](https://github.com/VCDP/CDN/blob/master/FFmpeg_patches/0001-Add-SVT-HEVC-FLV-support-on-FFmpeg.patch), [@runner365](https://github.com/runner365/ffmpeg_rtmp_h265/blob/5.1/flvenc.c), and [Matthieu Patou](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210701141528.776-1-jamrial@gmail.com/).
+See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1366868753) for details.
+
+Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874), [FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
 
 
 

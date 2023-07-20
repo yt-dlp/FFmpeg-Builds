@@ -39,21 +39,19 @@ These patches have been applied to the builds:
 by [@tpikonen](https://github.com/tpikonen).
 Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
 
-### 2. Support for HEVC over FLV
-
-Assembled from patches by [@xiaoxial](https://github.com/VCDP/CDN/blob/master/FFmpeg_patches/0001-Add-SVT-HEVC-FLV-support-on-FFmpeg.patch), [@runner365](https://github.com/runner365/ffmpeg_rtmp_h265/blob/5.1/flvenc.c), and [Matthieu Patou](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210701141528.776-1-jamrial@gmail.com/).
-See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1366868753) for details.
-
-Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874), [FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
 
 
-
-<!--
 ## Release-only patches
 Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
 
-### 1. XXX
--->
+### 1. Support for HEVC over FLV
+
+HEVC inside FLV has been [standardised](https://github.com/veovera/enhanced-rtmp/blob/main/enhanced-rtmp-v1.pdf) by Veovera, implemented by [@T-bagwell](https://github.com/T-bagwell) and merged to FFmpeg master in [aa83654](https://github.com/FFmpeg/FFmpeg/commit/aa83654d940e7599ee641fc5d0fcd10e7decf277) and [ac5cc66](https://github.com/FFmpeg/FFmpeg/commit/ac5cc66f9e4408c45c303f6bf482ff04d7cb355e).
+
+Release builds, however, continue to use an implementation assembled from patches by [@xiaoxial](https://github.com/VCDP/CDN/blob/master/FFmpeg_patches/0001-Add-SVT-HEVC-FLV-support-on-FFmpeg.patch), [@runner365](https://github.com/runner365/ffmpeg_rtmp_h265/blob/5.1/flvenc.c), and [Matthieu Patou](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210701141528.776-1-jamrial@gmail.com/).
+See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1366868753) for details.
+
+Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874), [FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
 
 
 

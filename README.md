@@ -39,6 +39,10 @@ These patches have been applied to the builds:
 by [@tpikonen](https://github.com/tpikonen).
 Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
 
+### 2. Chapter embedding regression
+
+by [@bashonly](https://github.com/bashonly).
+Fixes [FFmpeg#10482](https://trac.ffmpeg.org/ticket/10482)
 
 
 ## Release-only patches

@@ -1,0 +1,33 @@
+From 4629460590960d09ad5ac06c9bd34b45836b290b Mon Sep 17 00:00:00 2001
+From: bashonly <88596187+bashonly@users.noreply.github.com>
+Date: Sat, 21 Oct 2023 23:51:48 +0300
+Subject: [PATCH 1/2] Revert "fftools/ffmpeg_mux_init: Use all metadata
+ selectors if none is specified."
+
+This reverts commit 653ee3f159411a1b97c19b96393a39f29569ed99.
+---
+ fftools/ffmpeg_mux_init.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/fftools/ffmpeg_mux_init.c b/fftools/ffmpeg_mux_init.c
+index ab2d1d89e4..4cf18b4f02 100644
+--- a/fftools/ffmpeg_mux_init.c
++++ b/fftools/ffmpeg_mux_init.c
+@@ -2182,11 +2182,11 @@ static int copy_metadata(Muxer *mux, AVFormatContext *ic,
+     if (ret < 0)
+         return ret;
+ 
+-    if (type_in == 'g' || type_out == 'g' || !*outspec)
++    if (type_in == 'g' || type_out == 'g')
+         *metadata_global_manual = 1;
+-    if (type_in == 's' || type_out == 's' || !*outspec)
++    if (type_in == 's' || type_out == 's')
+         *metadata_streams_manual = 1;
+-    if (type_in == 'c' || type_out == 'c' || !*outspec)
++    if (type_in == 'c' || type_out == 'c')
+         *metadata_chapters_manual = 1;
+ 
+     /* ic is NULL when just disabling automatic mappings */
+-- 
+2.39.2
+

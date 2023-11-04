@@ -39,11 +39,6 @@ These patches have been applied to the builds:
 by [@tpikonen](https://github.com/tpikonen).
 Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
 
-### 2. Chapter embedding regression
-
-by [@bashonly](https://github.com/bashonly).
-Fixes [FFmpeg#10482](https://trac.ffmpeg.org/ticket/10482)
-
 
 ## Release-only patches
 Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
@@ -99,6 +94,12 @@ and merged in a series of commits:
 [c381f54](https://github.com/FFmpeg/FFmpeg/commit/c381f5412fe810bd8118123aed9bd4f76b75b59d)
 [69364a0](https://github.com/FFmpeg/FFmpeg/commit/69364a06c65d3437e8158cdffd98c2f6d1b84dd2)
 
+### 4. [Chapter embedding regression](https://ffmpeg.org/pipermail/ffmpeg-devel/2023-October/316365.html)
+
+by [@bashonly](https://github.com/bashonly).
+Fixes [FFmpeg#10482](https://trac.ffmpeg.org/ticket/10482)
+
+Fixed upstream by [@mkver](https://github.com/mkver); merged in [02064ba](https://github.com/FFmpeg/FFmpeg/commit/02064ba3a37754183cf7e7a4c1ffd3cdf971b5dc).
 
 
 ## Credits

@@ -18,20 +18,20 @@ jobs:
       fail-fast: false
       matrix:
         target: [win32,win64]
-        variant: [gpl-shared,gpl-shared 6.0]
+        variant: [gpl-shared,gpl-shared 6.1]
         quickbuild: [1]
         include:
           - target: linux64
             variant: gpl
             quickbuild: ''
           - target: linux64
-            variant: gpl 6.0
+            variant: gpl 6.1
             quickbuild: ''
           - target: linuxarm64
             variant: gpl
             quickbuild: ''
           - target: linuxarm64
-            variant: gpl 6.0
+            variant: gpl 6.1
             quickbuild: ''
     steps:
       - name: Free Disk-Space

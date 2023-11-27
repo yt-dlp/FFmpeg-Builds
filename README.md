@@ -1,7 +1,7 @@
 # FFmpeg Static Auto-Builds
 
 
-This repository provides static Windows (x86 and x86_64) and Linux (x86_64, arm64) Builds of [FFmpeg master](https://github.com/FFmpeg/FFmpeg) and [latest release branch](https://github.com/FFmpeg/FFmpeg/tree/release/4.4) **with some patches necessary for smooth integration with [yt-dlp](https://github.com/yt-dlp/yt-dlp)**
+This repository provides static Windows (x86 and x86_64) and Linux (x86_64, arm64) Builds of [FFmpeg master](https://github.com/FFmpeg/FFmpeg) and [latest release branch](https://github.com/FFmpeg/FFmpeg/tree/release/6.1) **with some patches necessary for smooth integration with [yt-dlp](https://github.com/yt-dlp/yt-dlp)**
 
 **Note**: The builds provided are only meant to be used with yt-dlp and any unrelated issues/patches will be rejected
 
@@ -23,8 +23,6 @@ This repository provides static Windows (x86 and x86_64) and Linux (x86_64, arm6
 ## Patches Welcome
 Known issues for which patches are welcome:
 
-<!--*Nothing at the moment*-->
-
 ### 1. More Builds
 
 There are currently no Windows ARM/MacOS builds. If you know how to add them to the workflow, make a PR
@@ -40,8 +38,11 @@ by [@tpikonen](https://github.com/tpikonen).
 Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
 
 
+
+<!--
 ## Release-only patches
 Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
+-->
 
 
 

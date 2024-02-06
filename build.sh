@@ -39,7 +39,12 @@ cat <<EOF >"$BUILD_SCRIPT"
     git config user.email "builder@localhost"
     git config user.name "Builder"
 
-    for patch in '/patches/$GIT_BRANCH'/*.patch; do
+    PATCHES=('/patches/$GIT_BRANCH'/*.patch)
+    if [[ "\${#PATCHES[@]}" = 0 ]]; then
+        echo 'No patches found for $GIT_BRANCH'
+        exit 1
+    fi
+    for patch in "\${PATCHES[@]}"; do
         echo "Applying \$patch"
         git apply "\$patch"
     done
@@ -55,7 +60,7 @@ EOF
 
 [[ -t 1 ]] && TTY_ARG="-t" || TTY_ARG=""
 
-docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "$PWD/ffbuild":/ffbuild -v "$BUILD_SCRIPT":/build.sh "$IMAGE" bash /build.sh
+docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v "$PWD/ffbuild":/ffbuild -v "$PWD/patches/ffmpeg/":/patches -v "$BUILD_SCRIPT":/build.sh "$IMAGE" bash /build.sh
 
 if [[ -n "$FFBUILD_OUTPUT_DIR" ]]; then
     mkdir -p "$FFBUILD_OUTPUT_DIR"

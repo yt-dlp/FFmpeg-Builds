@@ -29,21 +29,22 @@ There are currently no Windows ARM/MacOS builds. If you know how to add them to 
 
 
 
+<!--
 ## Patches Applied
 These patches have been applied to the builds:
+-->
+
+
+
+## Release-only patches
+Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
 
 ### 1. [WebVTT decoding fix](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-May/296353.html)
 
 by [@tpikonen](https://github.com/tpikonen).
 Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
 
-
-
-<!--
-## Release-only patches
-Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
--->
-
+Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https://github.com/FFmpeg/FFmpeg/commit/51d303e20cbb0874172f50b5172c515a973587d4).
 
 
 ## Historical Patches

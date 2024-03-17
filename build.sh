@@ -42,7 +42,6 @@ cat <<EOF >"$BUILD_SCRIPT"
     PATCHES=('/patches/$GIT_BRANCH'/*.patch)
     if [[ "\${#PATCHES[@]}" = 0 ]]; then
         echo 'No patches found for $GIT_BRANCH'
-        exit 1
     fi
     for patch in "\${PATCHES[@]}"; do
         echo "Applying \$patch"

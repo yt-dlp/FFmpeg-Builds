@@ -8,10 +8,11 @@ This repository provides static Windows (x86 and x86_64) and Linux (x86_64, arm6
 
 ## Downloads
 
-[![Linux x64 GPL master](https://img.shields.io/badge/-Linux_x64-red.svg?style=for-the-badge&logo=linux)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz "Linux x64 GPL master")
-[![Linux ARM64 GPL master](https://img.shields.io/badge/-Linux_ARM64-red.svg?style=for-the-badge&logo=linux)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linuxarm64-gpl.tar.xz "Linux ARM64 GPL master")
+[![Linux x64 GPL master](https://img.shields.io/badge/-Linux_x64-crimson.svg?style=for-the-badge&logo=linux)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz "Linux x64 GPL master")
+[![Linux ARM64 GPL master](https://img.shields.io/badge/-Linux_ARM64-orangered.svg?style=for-the-badge&logo=linux)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linuxarm64-gpl.tar.xz "Linux ARM64 GPL master")
 [![Windows x64 GPL master](https://img.shields.io/badge/-Windows_x64-blue.svg?style=for-the-badge&logo=windows)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip "Windows x64 GPL master")
 [![Windows x86 GPL master](https://img.shields.io/badge/-Windows_x86-9cf.svg?style=for-the-badge&logo=windows)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win32-gpl.zip "Windows x86 GPL master")
+[![Windows ARM64 GPL master](https://img.shields.io/badge/-Windows_arm64-lightblue.svg?style=for-the-badge&logo=windows)](https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-winarm64-gpl.zip "Windows ARM64 GPL master")
 [![Other variants](https://img.shields.io/badge/-Other-grey.svg?style=for-the-badge)](https://github.com/yt-dlp/FFmpeg-Builds/wiki/Latest "All variants")
 [![Other versions](https://img.shields.io/badge/-Old_Versions-lightgrey.svg?style=for-the-badge)](https://github.com/yt-dlp/FFmpeg-Builds/releases "All releases")
 
@@ -25,7 +26,11 @@ Known issues for which patches are welcome:
 
 ### 1. More Builds
 
-There are currently no Windows ARM/MacOS builds. If you know how to add them to the workflow, make a PR
+There are currently no MacOS builds. If you know how to add them to the workflow, make a PR
+
+### 2. Removing a segment before the first subtitle
+
+[yt-dlp#2753](https://github.com/yt-dlp/yt-dlp/issues/2753), [FFmpeg#9646](https://trac.ffmpeg.org/ticket/9646)
 
 
 

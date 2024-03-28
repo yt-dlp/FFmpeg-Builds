@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64]
+        target: [win32,win64,winarm64]
         variant: [gpl-shared,gpl-shared 6.1]
         quickbuild: [1]
         include:

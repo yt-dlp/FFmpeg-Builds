@@ -1,0 +1,41 @@
+diff --git a/libavformat/flv.h b/libavformat/flv.h
+index f710963..62297ed 100644
+--- a/libavformat/flv.h
++++ b/libavformat/flv.h
+@@ -116,6 +116,7 @@ enum {
+     FLV_CODECID_H264    = 7,
+     FLV_CODECID_REALH263= 8,
+     FLV_CODECID_MPEG4   = 9,
++    FLV_CODECID_HEVC    = 12,
+ };
+ 
+ enum {
+diff --git a/libavformat/flvdec.c b/libavformat/flvdec.c
+index 22a9b9e..dfbdaa6 100644
+--- a/libavformat/flvdec.c
++++ b/libavformat/flvdec.c
+@@ -335,6 +335,7 @@ static int flv_same_video_codec(AVCodecParameters *vpar, uint32_t flv_codecid)
+ 
+     switch (flv_codecid) {
+     case MKBETAG('h', 'v', 'c', '1'):
++    case FLV_CODECID_HEVC:
+         return vpar->codec_id == AV_CODEC_ID_HEVC;
+     case MKBETAG('a', 'v', '0', '1'):
+         return vpar->codec_id == AV_CODEC_ID_AV1;
+@@ -367,6 +368,7 @@ static int flv_set_video_codec(AVFormatContext *s, AVStream *vstream,
+ 
+     switch (flv_codecid) {
+     case MKBETAG('h', 'v', 'c', '1'):
++    case FLV_CODECID_HEVC:
+         par->codec_id = AV_CODEC_ID_HEVC;
+         vstreami->need_parsing = AVSTREAM_PARSE_HEADERS;
+         break;
+@@ -1463,7 +1465,7 @@ retry_duration:
+         }
+ 
+         if (st->codecpar->codec_id == AV_CODEC_ID_H264 || st->codecpar->codec_id == AV_CODEC_ID_MPEG4 ||
+-            (st->codecpar->codec_id == AV_CODEC_ID_HEVC && type == PacketTypeCodedFrames)) {
++            (st->codecpar->codec_id == AV_CODEC_ID_HEVC && (!enhanced_flv || type == PacketTypeCodedFrames))) {
+             // sign extension
+             int32_t cts = (avio_rb24(s->pb) + 0xff800000) ^ 0xff800000;
+             pts = av_sat_add64(dts, cts);

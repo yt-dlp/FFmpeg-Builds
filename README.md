@@ -50,19 +50,15 @@ Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874), [FFmpeg#6389]
 
 
 
+<!--
 ## Release-only patches
 Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
+-->
 
-### 1. [WebVTT decoding fix](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-May/296353.html)
-
-by [@tpikonen](https://github.com/tpikonen).
-Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
-
-Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https://github.com/FFmpeg/FFmpeg/commit/51d303e20cbb0874172f50b5172c515a973587d4).
 
 
 ## Historical Patches
-Patches that were used in the past but are no longer needed as of **6.1**:
+Patches that were used in the past but are no longer needed as of **7.0**:
 
 ### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 
@@ -107,6 +103,13 @@ by [@bashonly](https://github.com/bashonly).
 Fixes [FFmpeg#10482](https://trac.ffmpeg.org/ticket/10482)
 
 Fixed upstream by [@mkver](https://github.com/mkver); merged in [02064ba](https://github.com/FFmpeg/FFmpeg/commit/02064ba3a37754183cf7e7a4c1ffd3cdf971b5dc).
+
+### 5. [WebVTT decoding fix](https://ffmpeg.org/pipermail/ffmpeg-devel/2022-May/296353.html)
+
+by [@tpikonen](https://github.com/tpikonen).
+Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684](https://trac.ffmpeg.org/ticket/8684)
+
+Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https://github.com/FFmpeg/FFmpeg/commit/51d303e20cbb0874172f50b5172c515a973587d4).
 
 
 

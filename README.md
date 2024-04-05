@@ -34,10 +34,19 @@ There are currently no MacOS builds. If you know how to add them to the workflow
 
 
 
-<!--
 ## Patches Applied
 These patches have been applied to the builds:
--->
+
+### 1. Decoding non-standard HEVC in FLV containers
+
+HEVC inside FLV has been [standardized](https://github.com/veovera/enhanced-rtmp/blob/8c51d437e20a9199d92f24d9950b1216e07f065f/enhanced-rtmp.pdf) by [@Veovera](https://github.com/veovera), implemented by [@T-bagwell](https://github.com/T-bagwell) and merged to FFmpeg master in [aa83654](https://github.com/FFmpeg/FFmpeg/commit/aa83654d940e7599ee641fc5d0fcd10e7decf277) and [ac5cc66](https://github.com/FFmpeg/FFmpeg/commit/ac5cc66f9e4408c45c303f6bf482ff04d7cb355e).
+
+Chinese sites seem to continue using an old non-standard way to deliver HEVC in FLV containers. These builds of FFmpeg support the decoding of such files.
+
+Releases older than 6.1 also supported the encoding of such non-standard files. The implementation was assembled from patches by [@xiaoxial](https://github.com/VCDP/CDN/blob/master/FFmpeg_patches/0001-Add-SVT-HEVC-FLV-support-on-FFmpeg.patch), [@runner365](https://github.com/runner365/ffmpeg_rtmp_h265/blob/5.1/flvenc.c), and [Matthieu Patou](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210701141528.776-1-jamrial@gmail.com/).
+See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1366868753) for details.
+
+Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874), [FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
 
 
 
@@ -98,15 +107,6 @@ by [@bashonly](https://github.com/bashonly).
 Fixes [FFmpeg#10482](https://trac.ffmpeg.org/ticket/10482)
 
 Fixed upstream by [@mkver](https://github.com/mkver); merged in [02064ba](https://github.com/FFmpeg/FFmpeg/commit/02064ba3a37754183cf7e7a4c1ffd3cdf971b5dc).
-
-### 5. Support for HEVC over FLV
-
-HEVC inside FLV has been [standardized](https://github.com/veovera/enhanced-rtmp/blob/8c51d437e20a9199d92f24d9950b1216e07f065f/enhanced-rtmp.pdf) by [@Veovera](https://github.com/veovera), implemented by [@T-bagwell](https://github.com/T-bagwell) and merged to FFmpeg master in [aa83654](https://github.com/FFmpeg/FFmpeg/commit/aa83654d940e7599ee641fc5d0fcd10e7decf277) and [ac5cc66](https://github.com/FFmpeg/FFmpeg/commit/ac5cc66f9e4408c45c303f6bf482ff04d7cb355e).
-
-Releases older than 6.1 used a non-standard implementation assembled from patches by [@xiaoxial](https://github.com/VCDP/CDN/blob/master/FFmpeg_patches/0001-Add-SVT-HEVC-FLV-support-on-FFmpeg.patch), [@runner365](https://github.com/runner365/ffmpeg_rtmp_h265/blob/5.1/flvenc.c), and [Matthieu Patou](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210701141528.776-1-jamrial@gmail.com/).
-See [this comment](https://github.com/yt-dlp/yt-dlp/pull/5823#issuecomment-1366868753) for details.
-
-Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874), [FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
 
 
 

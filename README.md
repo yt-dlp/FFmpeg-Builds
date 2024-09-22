@@ -111,6 +111,12 @@ Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684]
 
 Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https://github.com/FFmpeg/FFmpeg/commit/51d303e20cbb0874172f50b5172c515a973587d4).
 
+### 2. [Use the correct Vulkan NULL type](https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2024-September/333751.html)
+
+by [@nihil-admirari](https://github.com/nihil-admirari). Makes it possible to build the current `master` for Win32 targets.
+
+Fixed upstream by [@ceyusa](https://github.com/ceyusa); merged in [2bcc124](https://github.com/FFmpeg/FFmpeg/commit/2bcc124e1a49e27b6a42b1d0ab1cac23568c3ca2).
+
 
 
 ## Credits

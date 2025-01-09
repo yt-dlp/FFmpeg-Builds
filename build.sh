@@ -89,6 +89,15 @@ cd -
 
 rm -rf ffbuild
 
+cd "${ARTIFACTS_PATH}" &&
+{
+    for bits in 512 256; do
+        ext="sha${bits}"
+        ${ext}sum --binary "${OUTPUT_FNAME}" >| "${OUTPUT_FNAME}.${ext}"
+    done ; unset -v ext bits ;
+    cd - ;
+}
+
 if [[ -n "$GITHUB_ACTIONS" ]]; then
     echo "build_name=${BUILD_NAME}" >> "$GITHUB_OUTPUT"
     echo "${OUTPUT_FNAME}" > "${ARTIFACTS_PATH}/${TARGET}-${VARIANT}${ADDINS_STR:+-}${ADDINS_STR}.txt"

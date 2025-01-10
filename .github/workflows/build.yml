@@ -282,7 +282,7 @@ jobs:
           RELDATE="$(date +'%Y-%m-%d %H:%M')"
           NAME="Auto-Build $RELDATE"
           TAGNAME="autobuild-$(date +'%Y-%m-%d-%H-%M')"
-          cat artifacts/*.sums > SUMS
+          cat artifacts/*.sums > SUMS < /dev/null
           gh release create "$TAGNAME" --target "master" --title "$NAME" SUMS artifacts/*.{zip,tar.xz}
           echo "tag_name=${TAGNAME}" >> $GITHUB_OUTPUT
           echo "rel_date=${RELDATE}" >> $GITHUB_OUTPUT

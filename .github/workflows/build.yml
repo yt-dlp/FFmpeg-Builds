@@ -296,9 +296,9 @@ jobs:
           ./util/repack_latest.sh latest_artifacts artifacts/*.{zip,tar.xz}
           NAME="Latest Auto-Build (${{ steps.create_release.outputs.rel_date }})"
           TAGNAME="latest"
+          ( cd latest_artifacts && for bits in 512 384 256; do sha${bits}sum --binary --tag * ; done > ../SUMS < /dev/null ; ) &
           gh release delete --cleanup-tag --yes "$TAGNAME" || true
           sleep 15 &
-          ( cd latest_artifacts && for bits in 512 384 256; do sha${bits}sum --binary --tag * ; done > ../SUMS ; ) &
           wait
           gh release create "$TAGNAME" --target "master" --title "$NAME" SUMS latest_artifacts/*
         env:

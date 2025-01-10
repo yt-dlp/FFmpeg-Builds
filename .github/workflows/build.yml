@@ -297,9 +297,10 @@ jobs:
           NAME="Latest Auto-Build (${{ steps.create_release.outputs.rel_date }})"
           TAGNAME="latest"
           gh release delete --cleanup-tag --yes "$TAGNAME" || true
-          sleep 15
-          ( cd latest_artifacts && for bits in 512 384 256; do sha${bits}sum --binary --tag * ; done > .SUMS ; mv .SUMS SUMS; )
-          gh release create "$TAGNAME" --target "master" --title "$NAME" latest_artifacts/*
+          sleep 15 &
+          ( cd latest_artifacts && for bits in 512 384 256; do sha${bits}sum --binary --tag * ; done > ../SUMS ; ) &
+          wait
+          gh release create "$TAGNAME" --target "master" --title "$NAME" SUMS latest_artifacts/*
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Update Wiki

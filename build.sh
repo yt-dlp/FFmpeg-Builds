@@ -79,8 +79,7 @@ rm -rf ffbuild
 cd "${ARTIFACTS_PATH}" &&
 (
     for bits in 512 384 256; do
-        ext="sha${bits}"
-        ${ext}sum --binary --tag "${OUTPUT_FNAME}"
+        sha${bits}sum --binary --tag "${OUTPUT_FNAME}"
     done >| "${OUTPUT_FNAME}.sums"
 )
 

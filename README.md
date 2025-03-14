@@ -32,6 +32,8 @@ There are currently no MacOS builds. If you know how to add them to the workflow
 
 [yt-dlp#2753](https://github.com/yt-dlp/yt-dlp/issues/2753), [FFmpeg#9646](https://trac.ffmpeg.org/ticket/9646)
 
+### 3. Long HLS playlist support
+[FFmpeg#7673](https://trac.ffmpeg.org/ticket/7673)
 
 
 <!--
@@ -56,7 +58,7 @@ Merged in
 
 
 ## Historical Patches
-Patches that were used in the past but are no longer needed as of **7.0**:
+Patches that were used in the past but are no longer needed as of **7.1**:
 
 ### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 

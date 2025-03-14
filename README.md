@@ -32,6 +32,8 @@ There are currently no MacOS builds. If you know how to add them to the workflow
 
 [yt-dlp#2753](https://github.com/yt-dlp/yt-dlp/issues/2753), [FFmpeg#9646](https://trac.ffmpeg.org/ticket/9646)
 
+### 3. Long HLS playlist support
+[FFmpeg#7673](https://trac.ffmpeg.org/ticket/7673)
 
 
 <!--
@@ -56,7 +58,7 @@ Merged in
 
 
 ## Historical Patches
-Patches that were used in the past but are no longer needed as of **7.0**:
+Patches that were used in the past but are no longer needed as of **7.1**:
 
 ### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 
@@ -109,7 +111,7 @@ Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684]
 
 Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https://github.com/FFmpeg/FFmpeg/commit/51d303e20cbb0874172f50b5172c515a973587d4).
 
-### 2. [Use the correct Vulkan NULL type](https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2024-September/333751.html)
+### 6. [Use the correct Vulkan NULL type](https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2024-September/333751.html)
 
 by [@nihil-admirari](https://github.com/nihil-admirari). Makes it possible to build the current `master` for Win32 targets.
 

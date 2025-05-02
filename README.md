@@ -55,6 +55,13 @@ Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874),
 Merged in
 [5cd49e1](https://github.com/FFmpeg/FFmpeg/commit/b76053d8bf322b197a9d07bd27bbdad14fd5bc15).
 
+### 2. A fix for YouTube AAC
+
+by [@michaelni](https://github.com/michaelni).
+Backport of
+[48c0dba](https://github.com/FFmpeg/FFmpeg/commit/48c0dba23b3ce8c2bcb180bd2c8029c3c2875424)
+to 7.1.
+
 
 
 ## Historical Patches
@@ -111,7 +118,7 @@ Fixes [yt-dlp#4127](https://github.com/yt-dlp/yt-dlp/issues/4127), [FFmpeg#8684]
 
 Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https://github.com/FFmpeg/FFmpeg/commit/51d303e20cbb0874172f50b5172c515a973587d4).
 
-### 2. [Use the correct Vulkan NULL type](https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2024-September/333751.html)
+### 6. [Use the correct Vulkan NULL type](https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2024-September/333751.html)
 
 by [@nihil-admirari](https://github.com/nihil-admirari). Makes it possible to build the current `master` for Win32 targets.
 

@@ -48,6 +48,12 @@ cat <<EOF >"$BUILD_SCRIPT"
         git apply "\$patch"
     done
 
+    if [[ '$GIT_BRANCH' != master ]]; then
+        readonly commit='48c0dba23b3ce8c2bcb180bd2c8029c3c2875424'
+        echo "Backporting \$commit"
+        git cherry-pick "\$commit"
+    fi
+
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE \
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \

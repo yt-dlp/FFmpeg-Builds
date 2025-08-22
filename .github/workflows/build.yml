@@ -24,6 +24,7 @@ jobs:
     name: Pre Checks
     if: ${{ github.event.inputs.buildOnly != 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 720
     steps:
       - name: Repo Check
         if: ${{ github.event_name == 'schedule' }}
@@ -50,6 +51,7 @@ jobs:
       matrix:
         runner: [ubuntu-latest,ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
+    timeout-minutes: 720
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -126,6 +128,7 @@ jobs:
     if: ${{ github.event.inputs.buildOnly != 'true' }}
     needs: build_base
     runs-on: ubuntu-latest
+    timeout-minutes: 720
     strategy:
       fail-fast: false
       matrix:
@@ -182,6 +185,7 @@ jobs:
     if: ${{ github.event.inputs.buildOnly != 'true' }}
     needs: build_target_bases
     runs-on: ubuntu-latest
+    timeout-minutes: 720
     strategy:
       fail-fast: false
       matrix:
@@ -257,6 +261,7 @@ jobs:
     if: ${{ ( github.event.inputs.buildOnly == 'true' && !cancelled() ) || success() }}
     needs: build_targets
     runs-on: ubuntu-latest
+    timeout-minutes: 720
     strategy:
       fail-fast: false
       matrix:
@@ -302,6 +307,7 @@ jobs:
     if: ${{ !cancelled() && ( github.event_name == 'schedule' || github.event.inputs.doRelease == 'true' ) && needs.build_ffmpeg.result == 'success' }}
     needs: build_ffmpeg
     runs-on: ubuntu-latest
+    timeout-minutes: 720
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h

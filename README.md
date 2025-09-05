@@ -43,22 +43,15 @@ These patches have been applied to the builds:
 
 
 
+<!--
 ## Release-only patches
 Patches that have been merged in FFmpeg master, but not in FFmpeg's latest release:
-
-### 1. Decoding non-standard HEVC in FLV containers
-
-by [@nihil-admirari](https://github.com/nihil-admirari).
-Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874),
-[FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
-
-Merged in
-[5cd49e1](https://github.com/FFmpeg/FFmpeg/commit/b76053d8bf322b197a9d07bd27bbdad14fd5bc15).
+-->
 
 
 
 ## Historical Patches
-Patches that were used in the past but are no longer needed as of **7.1**:
+Patches that were used in the past but are no longer needed as of **8.0**:
 
 ### 1. [Fix AAC HLS streams being truncated mid stream](https://patchwork.ffmpeg.org/project/ffmpeg/patch/20210927213133.28258-1-jeebjp@gmail.com)
 
@@ -116,6 +109,15 @@ Fixed upstream by [@ztion](https://github.com/ztion); merged in [51d303e](https:
 by [@nihil-admirari](https://github.com/nihil-admirari). Makes it possible to build the current `master` for Win32 targets.
 
 Fixed upstream by [@ceyusa](https://github.com/ceyusa); merged in [2bcc124](https://github.com/FFmpeg/FFmpeg/commit/2bcc124e1a49e27b6a42b1d0ab1cac23568c3ca2).
+
+### 7. Decoding non-standard HEVC in FLV containers
+
+by [@nihil-admirari](https://github.com/nihil-admirari).
+Fixes [yt-dlp#5874](https://github.com/yt-dlp/yt-dlp/issues/5874),
+[FFmpeg#6389](https://trac.ffmpeg.org/ticket/6389).
+
+Fixed upstream by [@BtbN](https://github.com/BtbN); merged in
+[5cd49e1](https://github.com/FFmpeg/FFmpeg/commit/b76053d8bf322b197a9d07bd27bbdad14fd5bc15).
 
 
 

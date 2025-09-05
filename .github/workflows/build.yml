@@ -188,16 +188,12 @@ jobs:
       fail-fast: false
       matrix:
         target: [win32,win64,winarm64]
-        variant: [gpl,gpl 7.1,gpl-shared,gpl-shared 7.1]
+        variant: [gpl,gpl-shared]
         include:
           - target: linux64
             variant: gpl
-          - target: linux64
-            variant: gpl 7.1
           - target: linuxarm64
             variant: gpl
-          - target: linuxarm64
-            variant: gpl 7.1
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
@@ -264,16 +260,12 @@ jobs:
       fail-fast: false
       matrix:
         target: [win32,win64,winarm64]
-        variant: [gpl,gpl 7.1,gpl-shared,gpl-shared 7.1]
+        variant: [gpl,gpl-shared]
         include:
           - target: linux64
             variant: gpl
-          - target: linux64
-            variant: gpl 7.1
           - target: linuxarm64
             variant: gpl
-          - target: linuxarm64
-            variant: gpl 7.1
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h

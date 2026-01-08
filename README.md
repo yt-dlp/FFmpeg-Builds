@@ -36,8 +36,9 @@ There are currently no MacOS builds. If you know how to add them to the workflow
 [FFmpeg#7673](https://trac.ffmpeg.org/ticket/7673)
 
 
-<!--
 ## Patches Applied
+Currently no patches have been applied to the builds
+<!--
 These patches have been applied to the builds:
 -->
 

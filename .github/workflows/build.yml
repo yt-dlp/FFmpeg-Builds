@@ -309,7 +309,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Install dependencies
         run: |
-          brew install automake git libtool nasm pkg-config
+          brew install automake git libtool nasm pkg-config \
+            lame opus libvorbis libvpx x264 x265 aom dav1d svt-av1 \
+            fdk-aac theora webp xvid snappy zimg frei0r libass \
+            freetype fontconfig fribidi harfbuzz libsoxr \
+            tesseract libarchive libxml2 openjpeg \
+            libvidstab rubberband libsamplerate speex \
+            opencore-amr librist srt libvmaf
       - name: Build FFmpeg
         id: build
         run: |
@@ -337,7 +343,40 @@ jobs:
           fi
 
           ./configure --prefix="$PWD/install" \
-            --enable-gpl --enable-version3 --disable-debug \
+            --enable-gpl --enable-version3 --enable-nonfree --disable-debug \
+            --enable-libmp3lame \
+            --enable-libopus \
+            --enable-libvorbis \
+            --enable-libvpx \
+            --enable-libx264 \
+            --enable-libx265 \
+            --enable-libaom \
+            --enable-libdav1d \
+            --enable-libsvtav1 \
+            --enable-libfdk-aac \
+            --enable-libtheora \
+            --enable-libwebp \
+            --enable-libxvid \
+            --enable-libsnappy \
+            --enable-libzimg \
+            --enable-frei0r \
+            --enable-libass \
+            --enable-libfreetype \
+            --enable-libfontconfig \
+            --enable-libfribidi \
+            --enable-libharfbuzz \
+            --enable-libsoxr \
+            --enable-libtesseract \
+            --enable-libxml2 \
+            --enable-libopenjpeg \
+            --enable-libvidstab \
+            --enable-librubberband \
+            --enable-libspeex \
+            --enable-libopencore-amrnb \
+            --enable-libopencore-amrwb \
+            --enable-librist \
+            --enable-libsrt \
+            --enable-libvmaf \
             --extra-version="$(date +%Y%m%d)"
 
           make -j$(sysctl -n hw.ncpu) V=1

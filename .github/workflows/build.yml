@@ -289,10 +289,87 @@ jobs:
           name: ffmpeg-${{ steps.strs.outputs.artifact_slug }}
           overwrite: true
           path: artifacts/*
+  build_macos:
+    name: Build macOS native
+    if: ${{ github.event.inputs.buildOnly != 'true' }}
+    needs: pre_check
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+            target: macosarm64
+          - runner: macos-15-intel
+            arch: x86_64
+            target: macos64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          brew install automake git libtool nasm pkg-config
+      - name: Build FFmpeg
+        id: build
+        run: |
+          set -xe
+          FFMPEG_REPO="${FFMPEG_REPO:-https://github.com/FFmpeg/FFmpeg.git}"
+          FFMPEG_REPO="${FFMPEG_REPO_OVERRIDE:-$FFMPEG_REPO}"
+          GIT_BRANCH="${GIT_BRANCH:-master}"
+          GIT_BRANCH="${GIT_BRANCH_OVERRIDE:-$GIT_BRANCH}"
+
+          git clone --filter=blob:none --branch="$GIT_BRANCH" "$FFMPEG_REPO" ffmpeg
+          cd ffmpeg
+
+          git config user.email "builder@localhost"
+          git config user.name "Builder"
+
+          shopt -s nullglob
+          PATCHES=("$GITHUB_WORKSPACE"/patches/ffmpeg/"$GIT_BRANCH"/*.patch)
+          if [[ "${#PATCHES[@]}" -gt 0 ]]; then
+            for patch in "${PATCHES[@]}"; do
+              echo "Applying $patch"
+              git apply "$patch"
+            done
+          else
+            echo "No patches found for $GIT_BRANCH"
+          fi
+
+          ./configure --prefix="$PWD/install" \
+            --enable-gpl --enable-version3 --disable-debug \
+            --extra-version="$(date +%Y%m%d)"
+
+          make -j$(sysctl -n hw.ncpu) V=1
+          make install
+
+          FFVERSION="$(./ffbuild/version.sh)"
+          BUILD_NAME="ffmpeg-${FFVERSION}-${{ matrix.target }}-gpl"
+          echo "build_name=${BUILD_NAME}" >> "$GITHUB_OUTPUT"
+      - name: Package
+        id: package
+        run: |
+          set -xe
+          BUILD_NAME="${{ steps.build.outputs.build_name }}"
+          mkdir -p "pkg/${BUILD_NAME}"
+          cp -r ffmpeg/install/* "pkg/${BUILD_NAME}/"
+          cp ffmpeg/COPYING.GPLv3 "pkg/${BUILD_NAME}/LICENSE.txt"
+          mkdir -p artifacts
+          cd pkg
+          tar cJf "../artifacts/${BUILD_NAME}.tar.xz" "${BUILD_NAME}"
+          echo "${{ matrix.target }}-gpl.txt" > "../artifacts/${{ matrix.target }}-gpl.txt"
+          echo "${BUILD_NAME}.tar.xz" >> "../artifacts/${{ matrix.target }}-gpl.txt"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-${{ matrix.target }}-gpl
+          overwrite: true
+          path: artifacts/*
+
   publish_release:
     name: Publish release
-    if: ${{ !cancelled() && ( github.event_name == 'schedule' || github.event.inputs.doRelease == 'true' ) && needs.build_ffmpeg.result == 'success' }}
-    needs: build_ffmpeg
+    if: ${{ !cancelled() && ( github.event_name == 'schedule' || github.event.inputs.doRelease == 'true' ) && needs.build_ffmpeg.result == 'success' && needs.build_macos.result == 'success' }}
+    needs: [build_ffmpeg, build_macos]
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk-Space

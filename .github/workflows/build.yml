@@ -143,6 +143,15 @@ jobs:
           - runner: ubuntu-24.04-arm
             target: linuxarm64
             tag_suffix: -arm
+          - runner: ubuntu-24.04-arm
+            target: linuxppc64
+            tag_suffix: -arm
+          - runner: ubuntu-24.04-arm
+            target: linuxmips64
+            tag_suffix: -arm
+          - runner: ubuntu-24.04-arm
+            target: linuxriscv64
+            tag_suffix: -arm
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h

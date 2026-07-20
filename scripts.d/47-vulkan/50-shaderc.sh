@@ -58,12 +58,12 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    (( $(ffbuild_ffver) <= 900 )) || return 0
+    (( $(ffbuild_ffver) < 900 )) || return 0
     echo --enable-libshaderc
 }
 
 ffbuild_unconfigure() {
     (( $(ffbuild_ffver) > 404 )) || return 0
-    (( $(ffbuild_ffver) <= 900 )) || return 0
+    (( $(ffbuild_ffver) < 900 )) || return 0
     echo --disable-libshaderc
 }

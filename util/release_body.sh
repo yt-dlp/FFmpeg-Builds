@@ -9,7 +9,7 @@ fi
 TAGNAME="$1"
 shift
 
-REPO="${GITHUB_REPOSITORY:-FFmpeg-Builds/FFmpeg-Builds}"
+REPO="${GITHUB_REPOSITORY:-yt-dlp/FFmpeg-Builds}"
 DL_BASE="https://github.com/${REPO}/releases/download/${TAGNAME}"
 
 TARGETS=(win64 winarm64 win32 linux64 linuxarm64 linux32)

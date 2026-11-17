@@ -1,3 +1,6 @@
+FROM scratch AS scripts
+COPY *.sh /
+
 FROM ubuntu:26.04
 
 ARG TARGETPLATFORM
@@ -42,7 +45,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y --no-modify-path && \
     ( [ "$TARGETPLATFORM" = "linux/riscv64" ] || cargo install cargo-c ) && \
     rm -rf "${CARGO_HOME}"/registry "${CARGO_HOME}"/git
 
-RUN --mount=src=.,dst=/input \
+RUN --mount=from=scripts,dst=/input \
     for s in /input/*.sh; do cp $s /usr/bin/$(echo $s | sed -e 's|.*/||' -e 's/\.sh$//'); done
 
 ENV HOST_CC="gcc" \

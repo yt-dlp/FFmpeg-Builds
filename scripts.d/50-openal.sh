@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/kcat/openal-soft.git"
-SCRIPT_COMMIT="4a52288b772d1722713675f71bb30f321e78fd80"
+SCRIPT_COMMIT="0609c8df5848040a13d67d790ac65ed95fad265f"
 
 ffbuild_enabled() {
     (( $(ffbuild_ffver) > 501 )) || return -1

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://svn.code.sf.net/p/lame/svn/trunk/lame"
-SCRIPT_REV="7113"
+SCRIPT_REV="7153"
 
 ffbuild_depends() {
     echo base

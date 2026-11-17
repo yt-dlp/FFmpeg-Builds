@@ -1,10 +1,10 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/rockdaboot/libpsl.git"
-SCRIPT_COMMIT="620d51d13351e8f3cb724471032246592c9bbd69"
+SCRIPT_COMMIT="88331dae18f1824ab033f7e77880cf65814fc21a"
 
 SCRIPT_REPO2="https://github.com/publicsuffix/list.git"
-SCRIPT_COMMIT2="8437e5262f13305f94087abe699b4fe2be1d1de8"
+SCRIPT_COMMIT2="ee4f2faaca9387a7cf3d433e68484b82c9542543"
 
 ffbuild_enabled() {
     return 0

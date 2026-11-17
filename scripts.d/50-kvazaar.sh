@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/ultravideo/kvazaar.git"
-SCRIPT_COMMIT="1f11f9ae33ef0cbe48a7d335b7144af1ecfe8092"
+SCRIPT_COMMIT="ec7562da7f5971f9fa3f984db358371e74bf3c7d"
 
 ffbuild_enabled() {
     return 0

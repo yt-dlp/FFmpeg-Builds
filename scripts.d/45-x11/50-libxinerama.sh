@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://gitlab.freedesktop.org/xorg/lib/libxinerama.git"
-SCRIPT_COMMIT="d7162b962710bc724b41cabab4e7cea303c4b541"
+SCRIPT_COMMIT="92d8f35d672537721dcd3a071d04306aa065c29b"
 
 ffbuild_enabled() {
     [[ $TARGET != linux* ]] && return -1

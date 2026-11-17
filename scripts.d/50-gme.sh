@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/libgme/game-music-emu.git"
-SCRIPT_COMMIT="f68963b1de0633149b05732113d3c3113c6f63a1"
+SCRIPT_COMMIT="8238afd9503a59ffcec0e2685584d5ce819ad7c6"
 
 ffbuild_enabled() {
     return 0

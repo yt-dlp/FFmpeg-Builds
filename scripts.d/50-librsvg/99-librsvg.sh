@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/GNOME/librsvg.git"
-SCRIPT_COMMIT="0c074d0a25adefd65843067306f9bc1fb609f68f"
+SCRIPT_COMMIT="a6ab2529560de5e17551a9ca3ed9e8a9b9bc9a2e"
 
 ffbuild_depends() {
     echo base

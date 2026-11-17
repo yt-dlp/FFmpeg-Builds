@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/xqq/libaribcaption.git"
-SCRIPT_COMMIT="37dde0f32652c32aa98bf92278944d1cfb2e7354"
+SCRIPT_COMMIT="d59c9d6403645dd7e8098b02b887a6723b15259b"
 
 ffbuild_depends() {
     echo base

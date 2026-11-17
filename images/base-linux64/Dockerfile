@@ -39,6 +39,7 @@ ENV FFBUILD_TOOLCHAIN=x86_64-ffbuild-linux-gnu \
 
 RUN \
     rustup default nightly && \
+    rustup target add "$FFBUILD_RUST_TARGET" && \
     echo "[unstable]\ntarget-applies-to-host = true\nhost-config = true\n" > "$CARGO_HOME"/config.toml && \
     echo "[target.$FFBUILD_RUST_TARGET]\nlinker = \"${FFBUILD_TOOLCHAIN}-gcc\"\nar = \"${FFBUILD_TOOLCHAIN}-gcc-ar\"\n" >> "$CARGO_HOME"/config.toml && \
     echo "[target.host]\nlinker = \"gcc\"\nar = \"ar\"\n" >> "$CARGO_HOME"/config.toml

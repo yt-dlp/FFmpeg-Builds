@@ -14,9 +14,6 @@ ffbuild_dockerdl() {
 }
 
 ffbuild_dockerbuild() {
-    # No need to build this
-    echo > app/CMakeLists.txt
-
     mkdir build && cd build
 
     if [[ $TARGET == *32 ]]; then
@@ -25,17 +22,12 @@ ffbuild_dockerbuild() {
     fi
 
     cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DCMAKE_BUILD_TYPE=Release \
-        -DOAPV_APP_STATIC_BUILD=ON -DENABLE_TESTS=OFF ..
+        -DOAPV_BUILD_SHARED_LIB=OFF -DOAPV_BUILD_APPS=OFF -DENABLE_TESTS=OFF ..
 
     make -j$(nproc)
     make install DESTDIR="$FFBUILD_DESTDIR"
 
     rm -rf "$FFBUILD_DESTPREFIX"/{bin,lib/oapv,lib/import,include/oapv/oapv_exports.h,lib/liboapv.so*}
-
-    {
-        echo "Libs.private: -lm"
-        echo "Cflags.private: -DOAPV_STATIC_DEFINE"
-    } >> "$FFBUILD_DESTPREFIX"/lib/pkgconfig/oapv.pc
 }
 
 ffbuild_configure() {

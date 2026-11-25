@@ -46,7 +46,7 @@ while [[ $# -gt 0 ]]; do
         OUTPUT="$RELEASE_DIR/$ONAME.$OUTEXT"
 
         if [[ $OUTEXT == tar.xz ]]; then
-            bsdtar -cf "$OUTPUT" --format gnutar --xz --options xz:threads=0 -s "|^$INAME/|$ONAME/|" "@$INPUT"
+            bsdtar -cf "$OUTPUT" --format gnutar --use-compress-program "xz -T1 --lzma2=preset=9e,dict=256MiB" -s "|^$INAME/|$ONAME/|" "@$INPUT"
         else
             cp "$INPUT" "$OUTPUT"
             7z rn -bso0 -bsp0 "$OUTPUT" "$INAME" "$ONAME"
